@@ -5,7 +5,11 @@ services:
   quarkus-lab:
     image: quarkus-lab
     container_name: quarkus-lab
-    command : ["sh", "-c", "tail -f /dev/null"]
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost/health || exit 1"]
+      interval: 5s
+      timeout: 2s
+      retries: 10
     ports:
       - 8080:8080
     environment:
